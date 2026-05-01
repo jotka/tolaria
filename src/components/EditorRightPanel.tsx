@@ -1,15 +1,20 @@
 import { useEffect } from 'react'
+import type { useCreateBlockNote } from '@blocknote/react'
 import { DEFAULT_AI_AGENT, type AiAgentId, type AiAgentReadiness } from '../lib/aiAgents'
 import type { AppLocale } from '../lib/i18n'
 import type { VaultEntry, GitCommit } from '../types'
 import type { NoteListItem } from '../utils/ai-context'
 import { Inspector, type FrontmatterValue } from './Inspector'
 import { AiPanelView } from './AiPanel'
+import { TableOfContentsPanel } from './TableOfContentsPanel'
 import { useAiPanelController } from './useAiPanelController'
 import { NEW_AI_CHAT_EVENT } from '../utils/aiPromptBridge'
 
 interface EditorRightPanelProps {
   showAIChat?: boolean
+  showTableOfContents?: boolean
+  onToggleTableOfContents?: () => void
+  editor?: ReturnType<typeof useCreateBlockNote>
   inspectorCollapsed: boolean
   inspectorWidth: number
   defaultAiAgent?: AiAgentId
@@ -42,7 +47,8 @@ interface EditorRightPanelProps {
 }
 
 export function EditorRightPanel({
-  showAIChat, inspectorCollapsed, inspectorWidth,
+  showAIChat, showTableOfContents, onToggleTableOfContents, editor,
+  inspectorCollapsed, inspectorWidth,
   defaultAiAgent = DEFAULT_AI_AGENT, defaultAiAgentReadiness, defaultAiAgentReady = true,
   onUnsupportedAiPaste,
   inspectorEntry, inspectorContent, entries, gitHistory, vaultPath,
@@ -96,6 +102,21 @@ export function EditorRightPanel({
           locale={locale}
           activeEntry={inspectorEntry}
           entries={entries}
+        />
+      </div>
+    )
+  }
+
+  if (showTableOfContents && editor) {
+    return (
+      <div
+        className="shrink-0 flex flex-col min-h-0"
+        style={{ width: inspectorWidth, minWidth: 240, height: '100%' }}
+      >
+        <TableOfContentsPanel
+          editor={editor}
+          onClose={() => onToggleTableOfContents?.()}
+          locale={locale}
         />
       </div>
     )

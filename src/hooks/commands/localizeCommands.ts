@@ -55,6 +55,7 @@ const STATIC_LABEL_KEYS: Partial<Record<string, TranslationKey>> = {
   'set-default-note-width-normal': 'command.view.defaultNoteWidthNormal',
   'set-default-note-width-wide': 'command.view.defaultNoteWidthWide',
   'toggle-ai-panel': 'command.view.toggleAiPanel',
+  'toggle-table-of-contents': 'command.view.toggleToc',
   'new-ai-chat': 'command.view.newAiChat',
   'toggle-backlinks': 'command.view.toggleBacklinks',
   'zoom-reset': 'command.view.resetZoom',

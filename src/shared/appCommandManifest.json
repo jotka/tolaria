@@ -182,6 +182,17 @@
         "requiresManualNativeAcceleratorQa": true
       }
     },
+    "viewToggleToc": {
+      "id": "view-toggle-toc",
+      "route": { "kind": "handler", "handler": "onToggleTableOfContents" },
+      "menuOwned": false,
+      "shortcut": {
+        "combo": "command-or-ctrl-shift",
+        "key": "t",
+        "code": "KeyT",
+        "display": "⌘⇧T"
+      }
+    },
     "viewToggleBacklinks": {
       "id": "view-toggle-backlinks",
       "route": { "kind": "handler", "handler": "onToggleInspector" },

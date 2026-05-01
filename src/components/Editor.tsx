@@ -70,6 +70,8 @@ interface EditorProps {
   onInitializeProperties?: (path: string) => void
   showAIChat?: boolean
   onToggleAIChat?: () => void
+  showTableOfContents?: boolean
+  onToggleTableOfContents?: () => void
   vaultPath?: string
   noteList?: NoteListItem[]
   noteListFilter?: { type: string | null; query: string }
@@ -321,6 +323,8 @@ function EditorLayout({
   showDiffToggle,
   showAIChat,
   onToggleAIChat,
+  showTableOfContents,
+  onToggleTableOfContents,
   inspectorCollapsed,
   onToggleInspector,
   onNavigateWikilink,
@@ -385,6 +389,8 @@ function EditorLayout({
   showDiffToggle: boolean
   showAIChat?: boolean
   onToggleAIChat?: () => void
+  showTableOfContents?: boolean
+  onToggleTableOfContents?: () => void
   inspectorCollapsed: boolean
   onToggleInspector: () => void
   onNavigateWikilink: (target: string) => void
@@ -466,6 +472,8 @@ function EditorLayout({
               showDiffToggle={showDiffToggle}
               showAIChat={showAIChat}
               onToggleAIChat={onToggleAIChat}
+              showTableOfContents={showTableOfContents}
+              onToggleTableOfContents={onToggleTableOfContents}
               inspectorCollapsed={inspectorCollapsed}
               onToggleInspector={onToggleInspector}
               onNavigateWikilink={onNavigateWikilink}
@@ -490,9 +498,12 @@ function EditorLayout({
               locale={locale}
             />
         }
-        {(showAIChat || !inspectorCollapsed) && <ResizeHandle onResize={onInspectorResize} />}
+        {(showAIChat || showTableOfContents || !inspectorCollapsed) && <ResizeHandle onResize={onInspectorResize} />}
         <EditorRightPanel
           showAIChat={showAIChat}
+          showTableOfContents={showTableOfContents}
+          onToggleTableOfContents={onToggleTableOfContents}
+          editor={editor}
           inspectorCollapsed={inspectorCollapsed}
           inspectorWidth={inspectorWidth}
           defaultAiAgent={defaultAiAgent}
@@ -541,6 +552,7 @@ export const Editor = memo(function Editor(props: EditorProps) {
     inspectorEntry, inspectorContent, gitHistory,
     onUpdateFrontmatter, onDeleteProperty, onAddProperty, onCreateMissingType, onCreateAndOpenNote, onInitializeProperties,
     showAIChat, onToggleAIChat,
+    showTableOfContents, onToggleTableOfContents,
     vaultPath, noteList, noteListFilter,
     onToggleFavorite, onToggleOrganized, onRevealFile, onCopyFilePath, onOpenExternalFile,
     onDeleteNote, onArchiveNote, onUnarchiveNote,
@@ -601,6 +613,8 @@ export const Editor = memo(function Editor(props: EditorProps) {
       showDiffToggle={showDiffToggle}
       showAIChat={showAIChat}
       onToggleAIChat={onToggleAIChat}
+      showTableOfContents={showTableOfContents}
+      onToggleTableOfContents={onToggleTableOfContents}
       inspectorCollapsed={inspectorCollapsed}
       onToggleInspector={onToggleInspector}
       onNavigateWikilink={onNavigateWikilink}

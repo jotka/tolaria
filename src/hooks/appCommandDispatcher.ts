@@ -50,6 +50,7 @@ export interface AppCommandHandlers {
   onToggleRawEditor?: () => void
   onToggleDiff?: () => void
   onToggleAIChat?: () => void
+  onToggleTableOfContents?: () => void
   onGoBack?: () => void
   onGoForward?: () => void
   onCheckForUpdates?: () => void
@@ -87,6 +88,7 @@ type SimpleHandlerKey = keyof Pick<
   | 'onToggleDiff'
   | 'onToggleInspector'
   | 'onToggleAIChat'
+  | 'onToggleTableOfContents'
   | 'onCommandPalette'
   | 'onZoomIn'
   | 'onZoomOut'
@@ -128,6 +130,7 @@ const SIMPLE_HANDLER_EXECUTORS: Record<SimpleHandlerKey, (handlers: AppCommandHa
   onToggleDiff: (handlers) => handlers.onToggleDiff?.(),
   onToggleInspector: (handlers) => handlers.onToggleInspector(),
   onToggleAIChat: (handlers) => handlers.onToggleAIChat?.(),
+  onToggleTableOfContents: (handlers) => handlers.onToggleTableOfContents?.(),
   onCommandPalette: (handlers) => handlers.onCommandPalette(),
   onZoomIn: (handlers) => handlers.onZoomIn(),
   onZoomOut: (handlers) => handlers.onZoomOut(),

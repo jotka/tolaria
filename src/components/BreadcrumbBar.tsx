@@ -16,6 +16,7 @@ import {
 import {
   GitBranch,
   Code,
+  ListBullets,
   Sparkle,
   SlidersHorizontal,
   Trash,
@@ -47,6 +48,8 @@ interface BreadcrumbBarProps {
   forceRawMode?: boolean
   showAIChat?: boolean
   onToggleAIChat?: () => void
+  showTableOfContents?: boolean
+  onToggleTableOfContents?: () => void
   inspectorCollapsed?: boolean
   onToggleInspector?: () => void
   onToggleFavorite?: () => void
@@ -334,6 +337,25 @@ function DiffAction({
     >
       <GitBranch size={16} className={BREADCRUMB_ICON_CLASS} />
     </IconActionButton>
+  )
+}
+
+function TableOfContentsAction({
+  showTableOfContents,
+  locale = 'en',
+  onToggleTableOfContents,
+}: Pick<BreadcrumbBarProps, 'showTableOfContents' | 'locale' | 'onToggleTableOfContents'>) {
+  return (
+    <ToggleIconAction
+      active={!!showTableOfContents}
+      activeClassName="text-foreground"
+      activeLabel={translate(locale, 'editor.toolbar.closeToc')}
+      inactiveLabel={translate(locale, 'editor.toolbar.openToc')}
+      onClick={onToggleTableOfContents}
+      shortcut={formatShortcutDisplay({ display: '⌘⇧T' })}
+    >
+      <ListBullets size={16} weight={showTableOfContents ? 'fill' : 'regular'} className={BREADCRUMB_ICON_CLASS} />
+    </ToggleIconAction>
   )
 }
 
@@ -800,6 +822,8 @@ function BreadcrumbActions({
   onToggleNoteWidth,
   showAIChat,
   onToggleAIChat,
+  showTableOfContents,
+  onToggleTableOfContents,
   inspectorCollapsed,
   onToggleInspector,
   onToggleFavorite,
@@ -863,6 +887,7 @@ function BreadcrumbActions({
         onDelete={onDelete}
         locale={locale}
       />
+      <TableOfContentsAction showTableOfContents={showTableOfContents} locale={locale} onToggleTableOfContents={onToggleTableOfContents} />
       <InspectorAction inspectorCollapsed={inspectorCollapsed} locale={locale} onToggleInspector={onToggleInspector} />
     </div>
   )

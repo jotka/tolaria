@@ -1074,7 +1074,7 @@ function App() {
     deleteActions.handleDeleteNote(typeEntry.path)
   }, [deleteActions, vault.entries])
 
-  const shouldLoadGitHistory = !layout.inspectorCollapsed && !showAIChat
+  const shouldLoadGitHistory = !layout.inspectorCollapsed && !showAIChat && !dialogs.showTableOfContents
   const gitHistory = useGitHistory(notes.activeTabPath, vault.loadGitHistory, shouldLoadGitHistory)
 
   const handleCreateType = useCallback(async (name: string) => {
@@ -1539,6 +1539,7 @@ function App() {
     onCreateEmptyVault: vaultSwitcher.handleCreateEmptyVault,
     onCreateType: dialogs.openCreateType,
     onToggleAIChat: dialogs.toggleAIChat,
+    onToggleTableOfContents: dialogs.toggleTableOfContents,
     onCheckForUpdates: handleCheckForUpdates,
     onRemoveActiveVault: removeActiveVaultCommand,
     onRestoreGettingStarted: cloneGettingStartedVault,
@@ -1713,6 +1714,8 @@ function App() {
               onInitializeProperties={handleInitializeProperties}
               showAIChat={dialogs.showAIChat}
               onToggleAIChat={dialogs.toggleAIChat}
+              showTableOfContents={dialogs.showTableOfContents}
+              onToggleTableOfContents={dialogs.toggleTableOfContents}
               vaultPath={resolvedPath}
               noteList={aiNoteList}
               noteListFilter={aiNoteListFilter}
