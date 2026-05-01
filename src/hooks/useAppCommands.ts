@@ -75,6 +75,7 @@ interface AppCommandsConfig {
   onInitializeGit?: () => void
   onCreateType?: () => void
   onToggleAIChat?: () => void
+  onToggleTableOfContents?: () => void
   onCheckForUpdates?: () => void
   onRemoveActiveVault?: () => void
   onRestoreGettingStarted?: () => void
@@ -176,6 +177,7 @@ type CommandRegistryCoreActions = Pick<
   | 'onSetNoteWidth'
   | 'onSetDefaultNoteWidth'
   | 'onToggleAIChat'
+  | 'onToggleTableOfContents'
 >
 type CommandRegistryVaultActions = Pick<
   CommandRegistryConfig,
@@ -256,6 +258,7 @@ function createKeyboardActions(
     onGoBack: config.onGoBack,
     onGoForward: config.onGoForward,
     onToggleAIChat: config.onToggleAIChat,
+    onToggleTableOfContents: config.onToggleTableOfContents,
     onToggleRawEditor: config.onToggleRawEditor,
     onToggleInspector: config.onToggleInspector,
     onToggleFavorite: config.onToggleFavorite,
@@ -452,6 +455,7 @@ function createCommandRegistryCoreConfig(
     onSetNoteWidth: config.onSetNoteWidth,
     onSetDefaultNoteWidth: config.onSetDefaultNoteWidth,
     onToggleAIChat: config.onToggleAIChat,
+    onToggleTableOfContents: config.onToggleTableOfContents,
   }
 }
 

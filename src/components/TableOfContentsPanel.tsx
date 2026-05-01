@@ -75,8 +75,10 @@ export function TableOfContentsPanel({ editor, onClose, locale = 'en' }: TableOf
 
   const handleClick = useCallback(
     (blockId: string) => {
-      editor.setTextCursorPosition(blockId, 'start')
       editor.focus()
+      editor.setTextCursorPosition(blockId, 'start')
+      const element = document.querySelector(`[data-id="${blockId}"]`)
+      element?.scrollIntoView({ behavior: 'smooth', block: 'center' })
     },
     [editor],
   )
