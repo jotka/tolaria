@@ -16,7 +16,7 @@ function createMockEditor(blocks: MockBlock[]) {
   return {
     document: blocks,
     forEachBlock(callback: (block: MockBlock) => boolean) {
-      const walk = (list: MockBlock[]) => {
+      function walk(list: MockBlock[]) {
         for (const block of list) {
           const cont = callback(block)
           if (cont && block.children) walk(block.children)
@@ -89,9 +89,9 @@ describe('TableOfContentsPanel', () => {
 
       render(<TableOfContentsPanel editor={editor} onClose={onClose} />)
 
-      const h1Button = screen.getByText('Level 1').closest('button')!
-      const h2Button = screen.getByText('Level 2').closest('button')!
-      const h3Button = screen.getByText('Level 3').closest('button')!
+      const h1Button = screen.getByText('Level 1').closest('button') as HTMLElement
+      const h2Button = screen.getByText('Level 2').closest('button') as HTMLElement
+      const h3Button = screen.getByText('Level 3').closest('button') as HTMLElement
 
       expect(h1Button.style.paddingLeft).toBe('8px')
       expect(h2Button.style.paddingLeft).toBe('24px')
