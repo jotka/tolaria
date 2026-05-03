@@ -29,7 +29,7 @@ function extractText(content: unknown): string {
 
 function extractHeadings(editor: BlockNoteEditor): HeadingItem[] {
   const headings: HeadingItem[] = []
-  editor.forEachBlock((block) => {
+  editor.forEachBlock((block: { id: string; type: string; props: Record<string, unknown>; content: unknown }) => {
     if (block.type === 'heading') {
       const text = extractText(block.content)
       if (text.trim()) {
