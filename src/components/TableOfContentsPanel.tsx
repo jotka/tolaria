@@ -20,16 +20,16 @@ interface TableOfContentsPanelProps {
 
 function extractText(content: unknown): string {
   if (!Array.isArray(content)) return ''
-  return content
-    .map((inline: { type?: string; text?: string }) =>
-      inline.type === 'text' ? (inline.text ?? '') : '',
-    )
-    .join('')
+  return content.reduce((acc: string, node: { type?: string; text?: string; content?: unknown }) => {
+    if (node.type === 'text') return acc + (node.text ?? '')
+    if (node.type === 'link') return acc + extractText(node.content)
+    return acc
+  }, '')
 }
 
 function extractHeadings(editor: BlockNoteEditor): HeadingItem[] {
   const headings: HeadingItem[] = []
-  for (const block of editor.document) {
+  editor.forEachBlock((block) => {
     if (block.type === 'heading') {
       const text = extractText(block.content)
       if (text.trim()) {
@@ -40,7 +40,8 @@ function extractHeadings(editor: BlockNoteEditor): HeadingItem[] {
         })
       }
     }
-  }
+    return true
+  })
   return headings
 }
 
@@ -68,9 +69,9 @@ export function TableOfContentsPanel({ editor, onClose, locale = 'en' }: TableOf
   const [headings, setHeadings] = useState<HeadingItem[]>(() => extractHeadings(editor))
 
   useEffect(() => {
-    const handler = () => setHeadings(extractHeadings(editor))
-    editor.onEditorContentChange(handler)
-    return () => { editor.onEditorContentChange(() => {}) }
+    return editor.onChange(() => {
+      setHeadings(extractHeadings(editor))
+    })
   }, [editor])
 
   const handleClick = useCallback(
@@ -113,7 +114,7 @@ export function TableOfContentsPanel({ editor, onClose, locale = 'en' }: TableOf
             <HeadingEntry
               key={heading.id}
               heading={heading}
-              onClick={() => handleClick(heading.id)}
+              onClick={() => { handleClick(heading.id) }}
             />
           ))
         )}
